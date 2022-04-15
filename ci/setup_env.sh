@@ -12,9 +12,12 @@ else
   exit 1
 fi
 
+conda update -q conda
 conda config --set always_yes yes --set changeps1 no
 
-conda create -n sksurv-test \
+conda install -n base conda-libmamba-solver
+
+conda create -n sksurv-test --experimental-solver=libmamba \
   python="${CONDA_PYTHON_VERSION:?}" \
   numpy="${NUMPY_VERSION:?}" \
   pandas="${PANDAS_VERSION:?}" \
@@ -29,6 +32,8 @@ conda info -a
 
 # shellcheck disable=SC1091
 source activate sksurv-test
+
+conda config --set experimental_solver libmamba --env
 
 # delete any version that is already installed
 pip uninstall --yes scikit-survival || exit 0

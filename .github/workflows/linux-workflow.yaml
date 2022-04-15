@@ -47,8 +47,6 @@ jobs:
       - name: Create Conda Environment
         run: |
           sudo chown -R $USER $CONDA
-          conda config --set always_yes yes --set changeps1 no
-          conda update -q conda
           ci/setup_env.sh ${{ runner.os }}
       - name: Install Dependencies
         run: |
